@@ -2,11 +2,11 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef, type MouseEvent } from 'react';
+import { useLang } from '../lib/i18n/LanguageProvider';
 import { isk, lowestMonthly } from '../lib/pricing';
 
-const chips = ['Hönnun', 'Birting', 'Umsjón', '.is'];
-
 export default function HeroVisual() {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -46,11 +46,8 @@ export default function HeroVisual() {
       >
         <div className="hero-stage-grid" aria-hidden="true" />
 
-        <motion.p
-          className="hero-stage-kicker"
-          style={{ x: x3, y: y3 }}
-        >
-          Frá
+        <motion.p className="hero-stage-kicker" style={{ x: x3, y: y3 }}>
+          {t.heroVisual.from}
         </motion.p>
 
         <motion.h2
@@ -60,10 +57,10 @@ export default function HeroVisual() {
         >
           {isk(lowestMonthly())}
         </motion.h2>
-        <p className="hero-stage-unit">á mánuði · allt innifalið</p>
+        <p className="hero-stage-unit">{t.heroVisual.unit}</p>
 
         <div className="hero-chips">
-          {chips.map((chip, i) => (
+          {t.heroVisual.chips.map((chip, i) => (
             <motion.span
               key={chip}
               whileHover={{ y: -4, scale: 1.04 }}

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import HeroVisual from './HeroVisual';
 import HomeLiveStage from './HomeLiveStage';
+import { useLang } from '../lib/i18n/LanguageProvider';
 import { isk, lowestBuy, lowestMonthly } from '../lib/pricing';
 
 const fade = {
@@ -13,25 +14,8 @@ const fade = {
   transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-const steps = [
-  'Þú hefur samband.',
-  'Við tölum saman.',
-  'Við hönnum síðuna.',
-  'Þú samþykkir.',
-  'Við birtum síðuna.',
-  'Við sjáum um hana áfram.',
-];
-
-const includes = [
-  'Við sjáum um síðuna.',
-  'Þú þarft ekki að gera neitt.',
-  'Við uppfærum hana.',
-  'Við höldum henni öruggri.',
-  'Við tengjum .is-heitið.',
-  'Við birtum síðuna.',
-];
-
 export default function HomeExperience() {
+  const { t } = useLang();
   const monthly = lowestMonthly();
   const buy = lowestBuy();
 
@@ -44,24 +28,21 @@ export default function HomeExperience() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="eyebrow">Vefsíða á áskrift</p>
+          <p className="eyebrow">{t.home.eyebrow}</p>
           <h1 className="display">
-            Þú sérð um
+            {t.home.h1a}
             <br />
-            reksturinn.
+            {t.home.h1b}
             <br />
-            <em>Við sjáum um síðuna.</em>
+            <em>{t.home.h1em}</em>
           </h1>
-          <p className="lede">
-            Við hönnum, birtum og höldum úti.
-            Þú þarft ekki að kunna neitt.
-          </p>
+          <p className="lede">{t.home.lede}</p>
           <div className="home-hero-cta">
             <Link href="/hafa-samband" className="btn">
-              Byrja
+              {t.cta.start}
             </Link>
             <a href="#syn" className="btn-ghost">
-              Sjá sýn
+              {t.cta.seeDemo}
             </a>
           </div>
         </motion.div>
@@ -71,9 +52,9 @@ export default function HomeExperience() {
 
       <section id="syn" className="home-live wrap">
         <motion.div {...fade} className="home-live-head">
-          <p className="eyebrow">Sýnishorn</p>
-          <h2 className="display">Raunveruleg síða.</h2>
-          <p className="lede">Smelltu á grein þegar fleiri bætast við.</p>
+          <p className="eyebrow">{t.home.synEyebrow}</p>
+          <h2 className="display">{t.home.synTitle}</h2>
+          <p className="lede">{t.home.synLede}</p>
         </motion.div>
         <HomeLiveStage />
       </section>
@@ -81,24 +62,26 @@ export default function HomeExperience() {
       <section className="home-price wrap">
         <motion.div {...fade} className="home-price-grid">
           <div>
-            <p className="eyebrow">Verð</p>
-            <h2 className="display">Einfalt.</h2>
+            <p className="eyebrow">{t.home.priceEyebrow}</p>
+            <h2 className="display">{t.home.priceTitle}</h2>
           </div>
           <div className="home-price-cols">
             <div>
-              <span>Leigja</span>
+              <span>{t.home.rent}</span>
               <strong className="display">{isk(monthly)}</strong>
-              <em>/ mán.</em>
+              <em>{t.common.perMonth}</em>
             </div>
             <div>
-              <span>Kaupa</span>
-              <strong className="display">frá {isk(buy)}</strong>
-              <em>einskiptis</em>
+              <span>{t.home.buy}</span>
+              <strong className="display">
+                {t.common.from} {isk(buy)}
+              </strong>
+              <em>{t.common.oneTime}</em>
             </div>
           </div>
         </motion.div>
         <motion.ul {...fade} className="home-includes">
-          {includes.map((item, i) => (
+          {t.home.includes.map((item, i) => (
             <li key={item}>
               <span>{String(i + 1).padStart(2, '0')}</span>
               <strong>{item}</strong>
@@ -107,18 +90,18 @@ export default function HomeExperience() {
         </motion.ul>
         <motion.div {...fade}>
           <Link href="/verd" className="btn-ghost">
-            Sjá nánar um verð
+            {t.cta.seePricing}
           </Link>
         </motion.div>
       </section>
 
       <section className="home-process wrap">
         <motion.div {...fade}>
-          <p className="eyebrow">Ferlið</p>
-          <h2 className="display">Svona einfaldlega.</h2>
+          <p className="eyebrow">{t.home.processEyebrow}</p>
+          <h2 className="display">{t.home.processTitle}</h2>
         </motion.div>
         <ol className="home-timeline">
-          {steps.map((step, i) => (
+          {t.home.steps.map((step, i) => (
             <motion.li
               key={step}
               initial={{ opacity: 0, x: -12 }}
@@ -136,12 +119,12 @@ export default function HomeExperience() {
       <section className="home-end">
         <div className="wrap">
           <motion.h2 {...fade} className="display">
-            Tilbúinn?
+            {t.home.endTitle}
           </motion.h2>
-          <motion.p {...fade}>Segðu okkur hvað þú gerir. Við gerum restina.</motion.p>
+          <motion.p {...fade}>{t.home.endLede}</motion.p>
           <motion.div {...fade}>
             <Link href="/hafa-samband" className="btn">
-              Hafa samband
+              {t.cta.contact}
             </Link>
           </motion.div>
         </div>

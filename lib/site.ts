@@ -6,9 +6,9 @@ export const site = {
 };
 
 export const nav = [
-  { href: '/', label: 'Heim' },
-  { href: '/snidomot', label: 'Sniðmát' },
-  { href: '/verd', label: 'Verð' },
-  { href: '/um-mig', label: 'Um okkur' },
-  { href: '/hafa-samband', label: 'Samband' },
+  { href: '/', key: 'home' as const },
+  { href: '/snidomot', key: 'templates' as const },
+  { href: '/verd', key: 'pricing' as const },
+  { href: '/um-mig', key: 'about' as const },
+  { href: '/hafa-samband', key: 'contact' as const },
 ];

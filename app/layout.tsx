@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { IBM_Plex_Sans, Newsreader } from 'next/font/google';
 import Footer from '../components/Footer';
 import Nav from '../components/Nav';
+import Providers from '../components/Providers';
 import { site } from '../lib/site';
 
 const display = Newsreader({
@@ -34,9 +35,11 @@ export default function RootLayout({
   return (
     <html lang="is" className={display.variable + ' ' + body.variable}>
       <body>
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        <Providers>
+          <Nav />
+          <main>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

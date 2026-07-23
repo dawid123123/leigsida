@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useLang } from '../lib/i18n/LanguageProvider';
 import { site } from '../lib/site';
 import type { PackageId, TermId } from '../lib/pricing';
 
@@ -11,18 +12,19 @@ export default function ContactForm({
   pack?: PackageId;
   term?: TermId;
 }) {
+  const { t } = useLang();
   const [done, setDone] = useState(false);
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const lines = [
-      'Nafn: ' + fd.get('name'),
-      'Netfang: ' + fd.get('email'),
-      'Sími: ' + fd.get('phone'),
-      'Fyrirtæki: ' + fd.get('company'),
-      'Pakki: ' + pack,
-      'Leiga/kaup: ' + term,
+      t.contact.name + ': ' + fd.get('name'),
+      t.contact.email + ': ' + fd.get('email'),
+      t.contact.phone + ': ' + fd.get('phone'),
+      t.contact.company + ': ' + fd.get('company'),
+      'Package: ' + pack,
+      'Term: ' + term,
       '',
       String(fd.get('message') || ''),
     ].join('\n');
@@ -31,7 +33,7 @@ export default function ContactForm({
       'mailto:' +
       site.email +
       '?subject=' +
-      encodeURIComponent('Fyrirspurn — ' + (fd.get('name') || '')) +
+      encodeURIComponent(t.contact.subject + ' — ' + (fd.get('name') || '')) +
       '&body=' +
       encodeURIComponent(lines);
     setDone(true);
@@ -40,31 +42,31 @@ export default function ContactForm({
   return (
     <form className="cform" onSubmit={submit}>
       <label>
-        <span>Nafn</span>
+        <span>{t.contact.name}</span>
         <input name="name" required />
       </label>
       <label>
-        <span>Netfang</span>
+        <span>{t.contact.email}</span>
         <input name="email" type="email" required />
       </label>
       <label>
-        <span>Sími</span>
+        <span>{t.contact.phone}</span>
         <input name="phone" />
       </label>
       <label>
-        <span>Fyrirtæki</span>
+        <span>{t.contact.company}</span>
         <input name="company" />
       </label>
       <label className="cform-full">
-        <span>Segðu okkur frá verkefninu</span>
+        <span>{t.contact.message}</span>
         <textarea name="message" rows={5} required />
       </label>
       <button type="submit" className="btn cform-full">
-        Senda
+        {t.cta.send}
       </button>
       {done ? (
         <p className="cform-done cform-full">
-          Ef ekkert opnaðist — skrifaðu á {site.email}
+          {t.contact.done} {site.email}
         </p>
       ) : null}
     </form>

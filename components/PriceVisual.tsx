@@ -3,9 +3,11 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { useRef, type MouseEvent } from 'react';
+import { useLang } from '../lib/i18n/LanguageProvider';
 import { isk, lowestBuy, lowestMonthly } from '../lib/pricing';
 
 export default function PriceVisual() {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -50,17 +52,19 @@ export default function PriceVisual() {
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       >
         <Link href="/byrja?term=askrift" className="price-visual-card is-hot">
-          <span>Leigja</span>
+          <span>{t.home.rent}</span>
           <strong className="display">{isk(monthly)}</strong>
-          <em>/ mán.</em>
-          <small>Við sjáum um allt</small>
+          <em>{t.common.perMonth}</em>
+          <small>{t.verd.rentSmall}</small>
         </Link>
 
         <Link href="/byrja?term=kaupa" className="price-visual-card">
-          <span>Kaupa</span>
-          <strong className="display">frá {isk(buy)}</strong>
-          <em>einskiptis</em>
-          <small>Þú eignast síðuna</small>
+          <span>{t.home.buy}</span>
+          <strong className="display">
+            {t.common.from} {isk(buy)}
+          </strong>
+          <em>{t.common.oneTime}</em>
+          <small>{t.verd.buySmall}</small>
         </Link>
       </motion.div>
     </div>

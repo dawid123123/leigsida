@@ -4,14 +4,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import LivePreview from './LivePreview';
 import TemplateThumb from './TemplateThumb';
+import { useLang } from '../lib/i18n/LanguageProvider';
+import { templateCopy } from '../lib/i18n/messages';
 import { catalogTemplates } from '../lib/templates';
 
-/** Stór live sýn + 3–4 val neðst */
 export default function HomeLiveStage() {
+  const { lang, t } = useLang();
   const picks = catalogTemplates().slice(0, 4);
-  const firstLive = picks.find((t) => t.live) || picks[0];
+  const firstLive = picks.find((x) => x.live) || picks[0];
   const [activeSlug, setActiveSlug] = useState(firstLive.slug);
-  const active = picks.find((t) => t.slug === activeSlug) || firstLive;
+  const active = picks.find((x) => x.slug === activeSlug) || firstLive;
+  const copy = templateCopy[active.slug];
 
   return (
     <div className="live-stage">
@@ -25,7 +28,10 @@ export default function HomeLiveStage() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
             >
-              <LivePreview url={active.previewUrl} title={active.name} />
+              <LivePreview
+                url={active.previewUrl}
+                title={copy?.name[lang] || active.name}
+              />
             </motion.div>
           ) : (
             <motion.div
@@ -36,40 +42,41 @@ export default function HomeLiveStage() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
             >
-              <p>{active.niche}</p>
-              <strong>{active.name}</strong>
-              <span>Kemur bráðum</span>
+              <p>{copy?.niche[lang] || active.niche}</p>
+              <strong>{copy?.name[lang] || active.name}</strong>
+              <span>{t.common.comingSoon}</span>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <div className="live-stage-picks" role="listbox" aria-label="Sniðmát">
-        {picks.map((t) => {
-          const on = t.slug === active.slug;
+      <div className="live-stage-picks" role="listbox" aria-label={t.nav.templates}>
+        {picks.map((item) => {
+          const on = item.slug === active.slug;
+          const c = templateCopy[item.slug];
           return (
             <button
-              key={t.slug}
+              key={item.slug}
               type="button"
               role="option"
               aria-selected={on}
               className={
                 'live-stage-pick' +
                 (on ? ' on' : '') +
-                (!t.live ? ' is-soon' : '')
+                (!item.live ? ' is-soon' : '')
               }
-              onClick={() => setActiveSlug(t.slug)}
+              onClick={() => setActiveSlug(item.slug)}
             >
               <TemplateThumb
-                name={t.name}
-                niche={t.niche}
-                cover={t.cover}
-                headline={t.headline}
-                tone={t.tone}
+                name={c?.name[lang] || item.name}
+                niche={c?.niche[lang] || item.niche}
+                cover={item.cover}
+                headline={item.headline}
+                tone={item.tone}
               />
-              <span>{t.niche}</span>
-              <strong>{t.name}</strong>
-              {!t.live ? <em>Kemur bráðum</em> : null}
+              <span>{c?.niche[lang] || item.niche}</span>
+              <strong>{c?.name[lang] || item.name}</strong>
+              {!item.live ? <em>{t.common.comingSoon}</em> : null}
             </button>
           );
         })}

@@ -4,10 +4,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useLang } from '../lib/i18n/LanguageProvider';
 import { nav, site } from '../lib/site';
 
 export default function Nav() {
   const path = usePathname();
+  const { lang, setLang, t } = useLang();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -48,7 +50,7 @@ export default function Nav() {
           {site.name}
         </Link>
 
-        <nav className="gnav-links" aria-label="Valmynd">
+        <nav className="gnav-links" aria-label={t.common.menu}>
           {nav.map((item) => {
             const active =
               path === item.href || path.startsWith(item.href + '/');
@@ -58,7 +60,7 @@ export default function Nav() {
                 href={item.href}
                 className={active ? 'gnav-link is-active' : 'gnav-link'}
               >
-                {item.label}
+                {t.nav[item.key]}
                 {active ? (
                   <motion.i layoutId="gnav-pill" className="gnav-pill" />
                 ) : null}
@@ -68,13 +70,29 @@ export default function Nav() {
         </nav>
 
         <div className="gnav-actions">
+          <div className="gnav-lang" role="group" aria-label="Language">
+            <button
+              type="button"
+              className={lang === 'is' ? 'on' : undefined}
+              onClick={() => setLang('is')}
+            >
+              IS
+            </button>
+            <button
+              type="button"
+              className={lang === 'en' ? 'on' : undefined}
+              onClick={() => setLang('en')}
+            >
+              EN
+            </button>
+          </div>
           <Link href="/byrja" className="btn btn-sm gnav-cta">
-            Byrja
+            {t.cta.start}
           </Link>
           <button
             type="button"
             className={'gnav-menu' + (open ? ' is-open' : '')}
-            aria-label={open ? 'Loka valmynd' : 'Opna valmynd'}
+            aria-label={open ? t.common.closeMenu : t.common.openMenu}
             aria-expanded={open}
             aria-controls="gnav-drawer"
             onClick={() => setOpen((v) => !v)}
@@ -97,7 +115,7 @@ export default function Nav() {
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="wrap gnav-drawer-inner">
-              <nav aria-label="Valmynd">
+              <nav aria-label={t.common.menu}>
                 {nav.map((item, i) => {
                   const active =
                     path === item.href || path.startsWith(item.href + '/');
@@ -114,18 +132,34 @@ export default function Nav() {
                         onClick={() => setOpen(false)}
                       >
                         <em>{String(i + 1).padStart(2, '0')}</em>
-                        {item.label}
+                        {t.nav[item.key]}
                       </Link>
                     </motion.div>
                   );
                 })}
               </nav>
+              <div className="gnav-drawer-lang">
+                <button
+                  type="button"
+                  className={lang === 'is' ? 'on' : undefined}
+                  onClick={() => setLang('is')}
+                >
+                  Íslenska
+                </button>
+                <button
+                  type="button"
+                  className={lang === 'en' ? 'on' : undefined}
+                  onClick={() => setLang('en')}
+                >
+                  English
+                </button>
+              </div>
               <Link
                 href="/byrja"
                 className="btn gnav-drawer-cta"
                 onClick={() => setOpen(false)}
               >
-                Byrja núna
+                {t.cta.startNow}
               </Link>
             </div>
           </motion.div>

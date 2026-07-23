@@ -224,6 +224,59 @@ img {
   justify-self: end;
 }
 
+.gnav-lang {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(61, 154, 166, 0.28);
+  border-radius: 7px;
+  overflow: hidden;
+  background: rgba(8, 12, 14, 0.5);
+}
+
+.gnav-lang button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 0.55rem;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.gnav-lang button.on {
+  color: var(--fg);
+  background: rgba(61, 154, 166, 0.2);
+}
+
+.gnav-drawer-lang {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin: 1.1rem 0 0.25rem;
+}
+
+.gnav-drawer-lang button {
+  appearance: none;
+  border: 1px solid rgba(61, 154, 166, 0.3);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.gnav-drawer-lang button.on {
+  color: var(--fg);
+  border-color: rgba(61, 154, 166, 0.65);
+  background: rgba(61, 154, 166, 0.12);
+}
+
 .gnav-cta {
   min-height: 2.15rem;
   padding: 0.4rem 0.85rem;
