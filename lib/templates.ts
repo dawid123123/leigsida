@@ -38,7 +38,7 @@ export const templates: Template[] = [
     tone: 'dark',
     demoHost: 'synishorn · auto-protect',
     previewUrl:
-      process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'http://localhost:3030',
+      process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ksprotect.is',
     live: true,
     featured: true,
   },

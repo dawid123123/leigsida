@@ -1,9 +1,24 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 /** Desktop demo canvas — no fake browser chrome */
 const DESKTOP_W = 1440;
+const PROD_PREVIEW =
+  process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ksprotect.is';
+
+function resolveUrl(url: string) {
+  if (!url) return url;
+  const isLocalHost =
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1');
+  // Never serve localhost iframe to real visitors
+  if (!isLocalHost && /localhost|127\.0\.0\.1/.test(url)) {
+    return PROD_PREVIEW;
+  }
+  return url;
+}
 
 export default function LivePreview({
   url,
@@ -15,6 +30,7 @@ export default function LivePreview({
 }) {
   const shellRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const src = useMemo(() => resolveUrl(url), [url]);
 
   useEffect(() => {
     const el = shellRef.current;
@@ -31,9 +47,9 @@ export default function LivePreview({
     return () => ro.disconnect();
   }, []);
 
-  if (!url) {
+  if (!src) {
     return (
-      <p style={{ padding: '2rem', color: 'var(--dim)' }}>
+      <p style={{ padding: '2rem', color: 'var(--muted)' }}>
         Engin virk sýn skráð.
       </p>
     );
@@ -59,7 +75,10 @@ export default function LivePreview({
       >
         <iframe
           title={title}
-          src={url}
+          src={src}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allow="fullscreen"
           style={{
             width: DESKTOP_W,
             height: 820,
