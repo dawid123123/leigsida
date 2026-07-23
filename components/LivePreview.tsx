@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 /** Desktop demo canvas — no fake browser chrome */
 const DESKTOP_W = 1440;
 const PROD_PREVIEW =
-  process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ksprotect.is';
+  process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ks-protect.vercel.app';
 
 function resolveUrl(url: string) {
   if (!url) return url;

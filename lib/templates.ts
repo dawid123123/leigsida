@@ -38,7 +38,7 @@ export const templates: Template[] = [
     tone: 'dark',
     demoHost: 'synishorn · auto-protect',
     previewUrl:
-      process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ksprotect.is',
+      process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ks-protect.vercel.app',
     live: true,
     featured: true,
   },
