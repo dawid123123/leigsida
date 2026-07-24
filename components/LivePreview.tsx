@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Template } from '../lib/templates';
 
-/** Desktop canvas — embeds the live KS Next.js site in DEMO mode (no client brand) */
+/** Desktop canvas — embeds template-bilaverd DEMO (1:1 live site, no client brand) */
 const DESKTOP_W = 1440;
 const PROD_PREVIEW =
   process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ks-protect.vercel.app';
@@ -16,13 +16,13 @@ function resolveUrl(url: string) {
     (window.location.hostname === 'localhost' ||
       window.location.hostname === '127.0.0.1');
 
-  // Prefer local KS demo when developing Leigsíða
-  if (isLocalHost && /ks-protect\.vercel\.app/.test(url)) {
+  // Dev: always use the saved template on :3000
+  if (isLocalHost) {
     return LOCAL_PREVIEW;
   }
 
-  // Never serve localhost iframe to real visitors
-  if (!isLocalHost && /localhost|127\.0\.0\.1/.test(url)) {
+  // Production: never leave a localhost iframe for visitors
+  if (/localhost|127\.0\.0\.1/.test(url)) {
     return PROD_PREVIEW;
   }
   return url;
