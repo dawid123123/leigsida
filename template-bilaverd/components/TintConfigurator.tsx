@@ -27,6 +27,8 @@ import {
   tintVehicles,
   getTintPriceGuide,
 } from './tintData';
+import { usePathname } from 'next/navigation';
+import { bilaverdHref } from '../lib/paths';
 import {
   tintViewWindows,
   tintViewZones,
@@ -751,7 +753,7 @@ export default function TintConfigurator({
             <span>{t.configurator.total}</span>
             <h2>{formatPrice(grandTotal)}</h2>
           </div>
-          <a href="/#contact" className="configurator-cta configurator-cta-mockup">
+          <a href={bilaverdHref("/#contact")} className="configurator-cta configurator-cta-mockup">
             {t.configurator.getQuote}
           </a>
         </div>

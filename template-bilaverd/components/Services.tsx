@@ -1,6 +1,8 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useTranslation } from '../lib/i18n/context';
+import { bilaverdHref } from '../lib/paths';
 import { isDemo } from '../lib/brand';
 import SectionIntro from './SectionIntro';
 
@@ -64,6 +66,8 @@ function BenefitIcon({ type }: { type: (typeof benefitKeys)[number] }) {
 
 export default function Graphene() {
   const t = useTranslation();
+  const pathname = usePathname();
+  const h = (href: string) => bilaverdHref(href, pathname);
 
   const packages = packageKeys.map((key, index) => ({
     featured: key === 'gold',
@@ -101,7 +105,7 @@ export default function Graphene() {
               </ul>
               <p className="package-note">{item.note}</p>
               <a
-                href={item.href}
+                href={h(item.href)}
                 className="service-link"
                 {...(item.external
                   ? { target: '_blank', rel: 'noreferrer' }
@@ -132,7 +136,7 @@ export default function Graphene() {
             ))}
           </div>
           <div className="graphene-cta-wrap">
-            <a href="/#contact" className="btn-primary graphene-cta">
+            <a href={h("/#contact")} className="btn-primary graphene-cta">
               {t.nav.getQuote} <span>{'\u2197'}</span>
             </a>
           </div>

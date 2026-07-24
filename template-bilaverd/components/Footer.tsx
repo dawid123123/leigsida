@@ -1,7 +1,9 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useTranslation } from '../lib/i18n/context';
 import { brand, isDemo } from '../lib/brand';
+import { bilaverdHref } from '../lib/paths';
 import InstagramStrip from './InstagramStrip';
 
 const MAP_QUERY = brand.mapQuery;
@@ -20,6 +22,8 @@ const hourRows = [
 
 export default function Footer() {
   const t = useTranslation();
+  const pathname = usePathname();
+  const h = (href: string) => bilaverdHref(href, pathname);
 
   return (
     <footer className="footer footer-v2">
@@ -100,13 +104,13 @@ export default function Footer() {
         <InstagramStrip />
 
         <nav className="footer-links" aria-label="Footer">
-          <a href="/#graphene">{t.nav.graphene}</a>
-          <a href="/ppf">{t.nav.ppf}</a>
-          <a href="/tint">{t.nav.tint}</a>
-          <a href="/um-okkur">{t.nav.about}</a>
-          <a href="/faq">{t.nav.faq}</a>
-          <a href="/netverslun">{t.nav.shop}</a>
-          <a href="/#contact">{t.nav.contact}</a>
+          <a href={h("/#graphene")}>{t.nav.graphene}</a>
+          <a href={h("/ppf")}>{t.nav.ppf}</a>
+          <a href={h("/tint")}>{t.nav.tint}</a>
+          <a href={h("/um-okkur")}>{t.nav.about}</a>
+          <a href={h("/faq")}>{t.nav.faq}</a>
+          <a href={h("/netverslun")}>{t.nav.shop}</a>
+          <a href={h("/#contact")}>{t.nav.contact}</a>
         </nav>
 
         <div className="footer-bottom">
@@ -127,7 +131,7 @@ export default function Footer() {
           </div>
           <p className="footer-copy">
             {t.footer.copyright}{' '}
-            <a href="/skilmalar" className="footer-legal-link">
+            <a href={h("/skilmalar")} className="footer-legal-link">
               {t.footer.terms}
             </a>
           </p>

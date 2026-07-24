@@ -2,9 +2,13 @@
 
 import { heroImage } from './siteImages';
 import { useTranslation } from '../lib/i18n/context';
+import { usePathname } from 'next/navigation';
+import { bilaverdHref } from '../lib/paths';
 
 export default function Hero() {
   const t = useTranslation();
+  const pathname = usePathname();
+  const h = (href: string) => bilaverdHref(href, pathname);
   const quickLinks = [
     { href: '/ppf', label: t.hero.quickLinks.ppfConfigurator },
     { href: '/tint', label: t.hero.quickLinks.tintConfigurator },
@@ -29,7 +33,7 @@ export default function Hero() {
           </h1>
           <p className="hero-description">{t.hero.description}</p>
           <div className="hero-actions">
-            <a className="btn-primary" href="/#contact">
+            <a className="btn-primary" href={h("/#contact")}>
               {t.hero.getFreeQuote}
             </a>
             <a className="btn-ghost" href="#graphene">
@@ -52,7 +56,7 @@ export default function Hero() {
           </div>
           <div className="hero-quick-links">
             {quickLinks.map((link) => (
-              <a key={link.href} href={link.href}>
+              <a key={link.href} href={h(link.href)}>
                 {link.label}
               </a>
             ))}

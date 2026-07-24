@@ -1,11 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { aboutPagePhotos } from './siteImages';
 import { useTranslation } from '../lib/i18n/context';
+import { bilaverdHref } from '../lib/paths';
 
 export default function About() {
   const t = useTranslation();
+  const pathname = usePathname();
+  const h = (href: string) => bilaverdHref(href, pathname);
   const a = t.about;
 
   return (
@@ -114,10 +118,10 @@ export default function About() {
         <div className="about-cta-panel">
           <p>{a.ctaText}</p>
           <div className="about-cta-actions">
-            <Link href="/#graphene" className="btn-ghost">
+            <Link href={h("/#graphene")} className="btn-ghost">
               {a.ctaPackages} <span>{'\u2197'}</span>
             </Link>
-            <Link href="/#contact" className="btn-primary">
+            <Link href={h("/#contact")} className="btn-primary">
               {t.nav.getQuote} <span>{'\u2197'}</span>
             </Link>
           </div>

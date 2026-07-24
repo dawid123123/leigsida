@@ -1,12 +1,16 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useTranslation } from '../lib/i18n/context';
+import { bilaverdHref } from '../lib/paths';
 import SectionIntro from './SectionIntro';
 
 const faqKeys = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'] as const;
 
 export default function FAQ() {
   const t = useTranslation();
+  const pathname = usePathname();
+  const h = (href: string) => bilaverdHref(href, pathname);
 
   return (
     <section className="faq faq-v2">
@@ -31,7 +35,7 @@ export default function FAQ() {
 
         <div className="faq-cta-wrap">
           <p>{t.faq.ctaText}</p>
-          <a href="/#contact" className="btn-primary">
+          <a href={h("/#contact")} className="btn-primary">
             {t.nav.getQuote} <span>{'\u2197'}</span>
           </a>
         </div>

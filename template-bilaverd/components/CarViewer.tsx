@@ -14,6 +14,8 @@ import {
   useSvgPathEditor,
 } from './SvgPathEditor';
 import { PartTileIcon } from './PartTileIcon';
+import { usePathname } from 'next/navigation';
+import { bilaverdHref } from '../lib/paths';
 import {
   Part,
   PpfCatalogSectionId,
@@ -635,7 +637,7 @@ export default function CarViewer({
             <span>{t.configurator.total}</span>
             <h2>{formatLocalizedPrice(lang, total)}</h2>
           </div>
-          <a href="/#contact" className="configurator-cta configurator-cta-mockup">
+          <a href={bilaverdHref("/#contact")} className="configurator-cta configurator-cta-mockup">
             {t.configurator.getQuote}
           </a>
         </div>

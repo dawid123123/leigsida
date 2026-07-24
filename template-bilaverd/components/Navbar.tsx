@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from '../lib/i18n/context';
 import { brand } from '../lib/brand';
+import { bilaverdHref, bilaverdPathname } from '../lib/paths';
 
 function FacebookIcon() {
   return (
@@ -58,7 +59,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const localPath = bilaverdPathname(pathname || '/');
   const t = useTranslation();
+  const h = (href: string) => bilaverdHref(href, pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,7 +89,7 @@ export default function Navbar() {
 
   return (
     <header className={headerClass}>
-      <Link href="/" className="logo">
+      <Link href={h('/')} className="logo">
         {brand.logoPrimary}
         {brand.logoAccent ? (
           <>
@@ -101,8 +104,8 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
-              className={navClass(pathname, link.match)}
+              href={h(link.href)}
+              className={navClass(localPath, link.match)}
             >
               {t.nav[link.key]}
             </Link>
@@ -118,63 +121,54 @@ export default function Navbar() {
         aria-label={menuOpen ? 'Loka valmynd' : 'Opna valmynd'}
         onClick={() => setMenuOpen((open) => !open)}
       >
-        <span className="navToggle-bar" />
-        <span className="navToggle-bar" />
-        <span className="navToggle-bar" />
+        <span />
+        <span />
+        <span />
       </button>
 
       <div
         id="nav-mobile-menu"
-        className={'nav-mobile-menu' + (menuOpen ? ' open' : '')}
-        aria-hidden={!menuOpen}
+        className={'nav-mobile-panel' + (menuOpen ? ' is-open' : '')}
       >
-        <div
-          className="nav-mobile-backdrop"
-          onClick={() => setMenuOpen(false)}
-          aria-hidden="true"
-        />
-        <div className="nav-mobile-panel">
-          <nav className="nav-mobile-links" aria-label="Mobile">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={navClass(pathname, link.match)}
-                onClick={() => setMenuOpen(false)}
-              >
-                {t.nav[link.key]}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="nav-mobile-footer">
-            <div className="navSocials" aria-label={t.nav.socialLabel}>
-              <a
-                href="https://www.facebook.com/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-              >
-                <FacebookIcon />
-              </a>
-              <a
-                href={brand.instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-              >
-                <InstagramIcon />
-              </a>
-            </div>
-            <LanguageSwitcher />
+        <nav className="nav-mobile-links" aria-label="Mobile">
+          {navLinks.map((link) => (
             <Link
-              href="/#contact"
-              className="navButton navButton-mobile navButton-v2"
+              key={'m-' + link.href}
+              href={h(link.href)}
+              className={navClass(localPath, link.match)}
               onClick={() => setMenuOpen(false)}
             >
-              {t.nav.getQuote} <span className="navButton-arrow">{'\u2197'}</span>
+              {t.nav[link.key]}
             </Link>
+          ))}
+        </nav>
+        <div className="nav-mobile-footer">
+          <div className="navSocials" aria-label={t.nav.socialLabel}>
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+            >
+              <FacebookIcon />
+            </a>
+            <a
+              href={brand.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+            >
+              <InstagramIcon />
+            </a>
           </div>
+          <LanguageSwitcher />
+          <Link
+            href={h('/#contact')}
+            className="navButton navButton-mobile navButton-v2"
+            onClick={() => setMenuOpen(false)}
+          >
+            {t.nav.getQuote} <span className="navButton-arrow">{'\u2197'}</span>
+          </Link>
         </div>
       </div>
 
@@ -200,7 +194,7 @@ export default function Navbar() {
 
         <LanguageSwitcher />
 
-        <Link href="/#contact" className="navButton navButton-v2">
+        <Link href={h('/#contact')} className="navButton navButton-v2">
           {t.nav.getQuote} <span className="navButton-arrow">{'\u2197'}</span>
         </Link>
       </div>

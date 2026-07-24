@@ -1,12 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTranslation } from '../lib/i18n/context';
+import { bilaverdHref } from '../lib/paths';
 import { verifiedCarPhotos } from './siteImages';
 import SectionIntro from './SectionIntro';
 
 export default function ConfiguratorHub() {
   const t = useTranslation();
+  const pathname = usePathname();
+  const h = (href: string) => bilaverdHref(href, pathname);
 
   const cards = [
     {
@@ -36,7 +40,7 @@ export default function ConfiguratorHub() {
           {cards.map((card) => (
             <Link
               key={card.href}
-              href={card.href}
+              href={h(card.href)}
               className={
                 'configurator-hub-card configurator-hub-card-v2 configurator-hub-card-' +
                 card.accent
