@@ -121,54 +121,63 @@ export default function Navbar() {
         aria-label={menuOpen ? 'Loka valmynd' : 'Opna valmynd'}
         onClick={() => setMenuOpen((open) => !open)}
       >
-        <span />
-        <span />
-        <span />
+        <span className="navToggle-bar" />
+        <span className="navToggle-bar" />
+        <span className="navToggle-bar" />
       </button>
 
       <div
         id="nav-mobile-menu"
-        className={'nav-mobile-panel' + (menuOpen ? ' is-open' : '')}
+        className={'nav-mobile-menu' + (menuOpen ? ' open' : '')}
       >
-        <nav className="nav-mobile-links" aria-label="Mobile">
-          {navLinks.map((link) => (
+        <button
+          type="button"
+          className="nav-mobile-backdrop"
+          aria-label="Loka valmynd"
+          onClick={() => setMenuOpen(false)}
+        />
+        <div className="nav-mobile-panel">
+          <nav className="nav-mobile-links" aria-label="Mobile">
+            {navLinks.map((link) => (
+              <Link
+                key={'m-' + link.href}
+                href={h(link.href)}
+                className={navClass(localPath, link.match)}
+                onClick={() => setMenuOpen(false)}
+              >
+                {t.nav[link.key]}
+              </Link>
+            ))}
+          </nav>
+          <div className="nav-mobile-footer">
+            <div className="navSocials" aria-label={t.nav.socialLabel}>
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href={brand.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+              >
+                <InstagramIcon />
+              </a>
+            </div>
+            <LanguageSwitcher />
             <Link
-              key={'m-' + link.href}
-              href={h(link.href)}
-              className={navClass(localPath, link.match)}
+              href={h('/#contact')}
+              className="navButton navButton-mobile navButton-v2"
               onClick={() => setMenuOpen(false)}
             >
-              {t.nav[link.key]}
+              {t.nav.getQuote}{' '}
+              <span className="navButton-arrow">{'\u2197'}</span>
             </Link>
-          ))}
-        </nav>
-        <div className="nav-mobile-footer">
-          <div className="navSocials" aria-label={t.nav.socialLabel}>
-            <a
-              href="https://www.facebook.com/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook"
-            >
-              <FacebookIcon />
-            </a>
-            <a
-              href={brand.instagramUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-            >
-              <InstagramIcon />
-            </a>
           </div>
-          <LanguageSwitcher />
-          <Link
-            href={h('/#contact')}
-            className="navButton navButton-mobile navButton-v2"
-            onClick={() => setMenuOpen(false)}
-          >
-            {t.nav.getQuote} <span className="navButton-arrow">{'\u2197'}</span>
-          </Link>
         </div>
       </div>
 
