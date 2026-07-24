@@ -36,9 +36,8 @@ export const templates: Template[] = [
     cover:
       'https://images.pexels.com/photos/18354100/pexels-photo-18354100.jpeg?auto=compress&cs=tinysrgb&w=900',
     tone: 'dark',
-    demoHost: 'synishorn · bilaverd · gotowy',
-    // Local: template-bilaverd on :3000 · Prod: set NEXT_PUBLIC_KS_PREVIEW_URL
-    previewUrl: 'http://localhost:3000',
+    demoHost: 'synishorn · bilaverd',
+    previewUrl: '',
     live: true,
     featured: true,
   },
