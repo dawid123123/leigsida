@@ -28,21 +28,11 @@ export default function TemplateDetailClient({ template }: { template: Template 
             <Link href="/byrja?term=askrift" className="btn">
               {t.cta.chooseThis}
             </Link>
-            {template.previewUrl ? (
-              <a
-                href={template.previewUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-ghost"
-              >
-                {t.cta.openPreview}
-              </a>
-            ) : null}
           </div>
         </header>
 
         <div className="tpl-preview">
-          <LivePreview url={template.previewUrl} title={name} />
+          <LivePreview template={template} title={name} />
         </div>
 
         <p className="tpl-note">{t.tpl.note}</p>

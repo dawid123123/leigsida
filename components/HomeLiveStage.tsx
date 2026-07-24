@@ -20,7 +20,7 @@ export default function HomeLiveStage() {
     <div className="live-stage">
       <div className="live-stage-frame">
         <AnimatePresence mode="wait">
-          {active.live && active.previewUrl ? (
+          {active.live ? (
             <motion.div
               key={active.slug}
               initial={{ opacity: 0 }}
@@ -29,7 +29,7 @@ export default function HomeLiveStage() {
               transition={{ duration: 0.35 }}
             >
               <LivePreview
-                url={active.previewUrl}
+                template={active}
                 title={copy?.name[lang] || active.name}
               />
             </motion.div>

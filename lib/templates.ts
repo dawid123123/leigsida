@@ -37,8 +37,7 @@ export const templates: Template[] = [
       'https://images.pexels.com/photos/18354100/pexels-photo-18354100.jpeg?auto=compress&cs=tinysrgb&w=900',
     tone: 'dark',
     demoHost: 'synishorn · auto-protect',
-    previewUrl:
-      process.env.NEXT_PUBLIC_KS_PREVIEW_URL || 'https://ks-protect.vercel.app',
+    previewUrl: '',
     live: true,
     featured: true,
   },
