@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import ByrjaPageClient from '../../components/ByrjaPageClient';
-import type { TermId } from '../../lib/pricing';
+import ByrjaPageClient from '@/components/ByrjaPageClient';
+import type { TermId } from '@/lib/pricing';
 
 export const metadata: Metadata = { title: 'Byrja' };
 

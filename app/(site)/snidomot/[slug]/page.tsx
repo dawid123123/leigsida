@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import TemplateDetailClient from '../../../components/TemplateDetailClient';
-import { getTemplate, publicTemplates } from '../../../lib/templates';
+import TemplateDetailClient from '@/components/TemplateDetailClient';
+import { getTemplate, publicTemplates } from '@/lib/templates';
 
 type Props = { params: { slug: string } };
 

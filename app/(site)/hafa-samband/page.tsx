@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import ContactPageClient from '../../components/ContactPageClient';
-import type { PackageId, TermId } from '../../lib/pricing';
+import ContactPageClient from '@/components/ContactPageClient';
+import type { PackageId, TermId } from '@/lib/pricing';
 
 export const metadata: Metadata = { title: 'Samband' };
 

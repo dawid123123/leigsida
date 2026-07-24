@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import TemplateSiteDemo from './TemplateSiteDemo';
 import type { Template } from '../lib/templates';
 
-/** In-app template preview only — never loads an external KS Protect URL */
+/** Same-origin 1:1 template (template-bilaverd DEMO) — not an external KS URL */
 const DESKTOP_W = 1440;
+const PREVIEW_PATH = '/synishorn/bilaverd';
 
 export default function LivePreview({
   template,
@@ -36,12 +36,13 @@ export default function LivePreview({
   }, []);
 
   const viewH = Math.round(820 * scale);
+  const label = title || template.name;
 
   return (
     <div
       ref={shellRef}
       className="live-preview-shell"
-      aria-label={title || template.name}
+      aria-label={label}
       style={{
         border: '1px solid var(--line)',
         overflow: 'hidden',
@@ -49,16 +50,23 @@ export default function LivePreview({
       }}
     >
       <div style={{ height: viewH, overflow: 'hidden', position: 'relative' }}>
-        <div
+        <iframe
+          title={label}
+          src={PREVIEW_PATH}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allow="fullscreen"
           style={{
             width: DESKTOP_W,
             height: 820,
+            border: 0,
+            display: 'block',
+            background: '#0c0c0c',
             transform: `scale(${scale})`,
             transformOrigin: 'top left',
+            pointerEvents: 'auto',
           }}
-        >
-          <TemplateSiteDemo template={template} />
-        </div>
+        />
       </div>
     </div>
   );

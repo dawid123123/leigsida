@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AboutPageClient from '../../components/AboutPageClient';
+import AboutPageClient from '@/components/AboutPageClient';
 
 export const metadata: Metadata = { title: 'Um okkur' };
 
